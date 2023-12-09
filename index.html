@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/normalize.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <title>MyTask App</title>
+</head>
+
+<body>
+    <header>
+        <h1 class="mb-50">MyTask App</h1>
+    </header>
+    <main>
+        <div class="container">
+            <div class="mb-50">
+                <h2>Add New Task</h2>
+                <form id="taskForm" onsubmit="addTask();return false">
+                    <div class="input-box">
+                        <label for="taskName">Task Name:</label>
+                        <input type="text" id="taskName" placeholder="Enter Your Task" required>
+                    </div>
+                    <div class="input-box">
+                        <label for="taskDate"> Task Date:</label>
+                        <input type="date" id="taskDate" required>
+                    </div>
+                    <div class="input-box">
+                        <label for="taskTime">Task Time:</label>
+                        <input type="time" id="taskTime">
+                    </div>
+                    <div class="button-box">
+                        <button type="submit" id="submit">Add Task</button>
+                    </div>
+                </form>
+                <div id="taskList">
+                </div>
+            </div>
+            <div class="">
+                <div class="task">
+                    <h2>My Task</h2>
+                    <div class="table-top-btn">
+                        <button class="btn delete-all-btn" onclick="deleteAll();">Delete All</button>
+                        <button class="btn delete-btn" onclick="deleteButton();" style="display: none;">Delete</button>
+                    </div>
+                </div>
+                <div class="table-wrap" id="myElement">
+                    <table class="table" cellpadding="0" cellspacing="0">
+                        <thead>
+                            <tr class="table-head">
+                                <th>#</th>
+                                <th scope="col">Task Name</th>
+                                <th scope="col">Task Time</th>
+                                <th scope="col">Task Status</th>
+                                <th scope="col">Task Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody">
+                        </tbody>
+                    </table>
+                    <div class="loader-wrap">
+                        <div class="loader"></div>
+                    </div>
+                </div>
+                <div class="table-bottom-btn">
+                    <button onclick="showTask(allTask)" class="btn all-task-btn">All Tasks</button>
+                    <button onclick="filterCompleted()" class="btn">Completed Tasks</button>
+                    <button onclick="filterIncompleted('incomplete')" class="btn">Incomplete Tasks</button>
+                </div>
+                <div id="taskCount"></div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2023 MyTask App</p>
+    </footer>
+    <script src="./js/data.js"></script>
+    <script src="./js/script.js"></script>
+</body>
+
+</html>
