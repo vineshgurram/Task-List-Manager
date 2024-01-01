@@ -3,24 +3,54 @@ let allTask = [
         id: 0,
         taskName: "Meditation",
         taskStatus: "Completed",
-        taskAt: '2022-02-01 at 16:14'
+        taskDescription:"Meditation description",
+        taskDate: {
+            fullDate: "Full date",
+            day: "Day",
+            date: "Date",
+            month: "Month",
+            year : "year"
+        }
     },
     {
         id: 1,
         taskName: "Learning",
         taskStatus: "Incompleted",
-        taskAt: '2022-11-01 at 16:14'
+        taskDescription:"Learning description",
+        taskDate: {
+            fullDate: "Full date",
+            day: "Day",
+            date: "Date",
+            month: "Month",
+            year : "year"
+        }
     }
     , {
         id: 2,
         taskName: "Go to Shopping",
         taskStatus: "Incompleted",
-        taskAt: '2012-11-01 at 16:14'
+        taskDescription:"Go to Shopping description",
+        taskDate: {
+            fullDate: "Full date",
+            day: "Day",
+            date: "Date",
+            month: "Month",
+            year : "year"
+        }
     },
     {
         id: 3,
         taskName: "Read Book",
         taskStatus: "Incompleted",
-        taskAt: '2012-11-11 at 01:14'
+        taskDescription:"Read Book description",
+        taskDate: {
+            fullDate: "Full date",
+            day: "Day",
+            date: "Date",
+            month: "Month",
+            year : "year"
+        }
     }
 ];
+
+// let allTask=[];
