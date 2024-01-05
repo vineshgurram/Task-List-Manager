@@ -53,4 +53,5 @@ let allTask = [
     }
 ];
 
-// let allTask=[];
+
+let trashItems = [];

@@ -2,7 +2,6 @@ let taskInput = document.querySelector("#taskName");
 let taskDate = document.querySelector("#taskDate");
 let taskTime = document.querySelector("#taskTime")
 let taskForm = document.querySelector("#taskForm");
-let taskEditForm = document.querySelector("#taskEditForm");
 let loaderBox = document.querySelector("table-wrap");
 let deleteBtn = document.querySelector(".delete-btn");
 let deleteAllBtn = document.querySelector(".delete-all-btn");
@@ -13,6 +12,7 @@ let tableRow = document.querySelectorAll(".tr");
 let taskDescription = document.querySelector("#taskDescription");
 const day = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
 
 function displayModal(message) {
     modalPopupParagraph.innerHTML = message;
@@ -27,7 +27,6 @@ function addTask() {
     let taskDateObj = new Date(taskDate.value)
     let taskDayValue = day[taskDateObj.getDay()];
     let taskDateValue = taskDateObj.getDate();
-    console.log(taskDateObj)
     let taskMonthValue = month[taskDateObj.getMonth()];
     let taskDescriptionValue = taskDescription.value;
     let taskFullDate = `${taskMonthValue} -- ${taskDateObj.getFullYear()} -- ${taskDateValue} -- ${taskDayValue}`
@@ -52,42 +51,46 @@ function addTask() {
     taskInput.value = "";
     taskDate.value = "";
     taskTime.value = "";
-    completeBox = document.querySelector(".task-completed-box");
-    completeBox.classList.add('active');
-    setTimeout(function () {
-        completeBox.classList.remove('active');
-    }, 3000);
     showTask(allTask);
+    console.log(allTask);
+
 }
 
 
 function showTask(array) {
+    // let display = "";
+    // array.forEach(function (el, id) {
+    //     display += `<tr data-id="${id}" class="tr"><td><input type="checkbox" data-id="${id}" onclick="checkRemove(${id})" class="checkbox"></td><td>${el.taskName}</td><td>${el.taskDate.date}</td><td>${el.taskStatus}</td><td><button onclick="removeTask(${id})" class="btn delete-btn">Remove</button><button onclick="completedTask(${id})" class="btn complete-btn">Completed</button></td></tr>`;
+    // });
+    // displayLoader();
+    // document.querySelector("#tbody").innerHTML = display;
+
     let display1 = "";
     array.forEach(function (el, id) {
-        display1 += `<div class="task-box" data-id="${id}">
-            <div class="flex">
-                <div class="task-box-info">
-                <h3>${el.taskName}</h3>  
-                <p>${el.taskDate.fullDate}</p>
-                <p class="task-status">${(el.taskStatus == "Completed") ? "Done" : "Pending"}</p>
-                </div>
-                <div class="action-box">
-                    <input type="checkbox" class="checkbox" onclick="checkRemove(${id})" data-id="${id}">
-                    <button class="get-details" onclick="fetchDetails(${el.id})">
-                        <img src="img/right-up.png" alt="">
-                    </button>
-                </div>
+        display1 += `<div class="task-box">
+        <div class="flex">
+            <div class="task-box-info">
+            <h3>${el.taskName}</h3>  
+            <p>${el.taskDate.fullDate}</p>
+            <p class="task-status">${(el.taskStatus == "Completed") ? "Done" : "Pending"}</p>
             </div>
-        </div>`;
+            <div class="action-box">
+                <input type="checkbox" data-id="${id}" onclick="checkRemove(${id})" class="checkbox">
+                <button onclick="fetchDetails(${el.id})" class="get-details">
+                    <img src="img/right-up.png" alt="">
+                </button>
+            </div>
+        </div>
+    </div>`;
     });
-    displayLoader();
     document.querySelector(".task-grid").innerHTML = display1;
 
-    if (array.length == 0) {
+    if (allTask.length == 0) {
         document.querySelector(".task-grid").innerHTML = `<h2>No Task Added Yet</td></h2>`;
     }
 
     let taskStatusElement = document.querySelector(".task-status");
+
     if (taskStatusElement.innerText == "Done") {
         taskStatusElement.style.color = "#0174BE";
     }
@@ -134,6 +137,63 @@ function displayLoader() {
 }
 
 
+let selectArray = [];
+function checkRemove(id) {
+    console.log(id)
+    var checkbox = document.querySelector(`.checkbox[data-id="${id}"]`);
+    console.log(id)
+    // unique = id;
+    if (checkbox.checked == true) {
+        if (!selectArray.includes(id)) {
+            selectArray.push(id);
+            // alert("checked")
+            // alert(id)
+        }
+    }
+    else if (checkbox.checked == false) {
+        const index = selectArray.indexOf(id);
+        console.log(id);
+        if (index !== -1) {
+            selectArray.splice(index, 1);
+        }
+    }
+    console.log(selectArray)
+    if (selectArray.length == 0) {
+        document.querySelector(".operation-box").classList.remove('active');
+    }
+    else {
+        document.querySelector(".operation-box").classList.add('active');
+    }
+}
+
+
+function deleteButton() {
+    if (selectArray.length === 0) {
+        alert("Please select a task to delete.");
+        return;
+    }
+
+    if (confirm("Are you sure you want to remove this task?")) {
+        // Sort the array in descending order to avoid index issues
+        selectArray.sort((a, b) => b - a);
+
+        for (const index of selectArray) {
+            if (index >= 0 && index < allTask.length) {
+                allTask.splice(index, 1);
+            }
+        }
+
+        showTask(allTask);
+        console.log(allTask);
+    } else {
+        alert("Removal canceled.");
+    }
+
+    selectArray = [];
+    document.querySelector('.operation-box').classList.remove("active");
+}
+
+
 function deleteAll() {
     if (allTask.length !== 0) {
         if (confirm("Are you sure you want to delete all task ?") == true) {
@@ -142,9 +202,11 @@ function deleteAll() {
                 checkbox.checked = true;
             });
             allTask.splice(0, allTask.length);
-            document.querySelector('.operation-box').classList.remove("active");
             setTimeout(function () {
                 showTask(allTask);
+                if (allTask.length == 0) {
+                    document.querySelector("#tbody").innerHTML = `<tr><td colspan="5">No Task Added Yet</td></tr>`;
+                }
             }, 500);
         }
     }
@@ -192,32 +254,15 @@ document.querySelector(".add-top-action .back-btn").addEventListener("click", fu
     document.querySelector('.overlay').classList.remove("active");
 })
 
-// document.querySelectorAll(".get-details").forEach(el => {
-//     el.addEventListener("click", function () {
-//         let dataValue = this.closest(".task-box").getAttribute('data-id');
-//         document.querySelector('.task-expand').classList.add("active");
-//         document.querySelector('.overlay').classList.add("active");
-//         fetchDetails(dataValue);
-//     });
-// });
 
 function fetchDetails(id) {
-    document.querySelector('#task-name').innerText = allTask[id].taskName;
+    document.querySelector('.task-expand').classList.add("active");
+    document.querySelector('.overlay').classList.add("active");
+    document.querySelector('.task-expand h2').innerText = allTask[id].taskName;
     document.querySelector('#task-day').innerText = allTask[id].taskDate.day;
     document.querySelector('#task-description').value = allTask[id].taskDescription;
     document.querySelector('#task-date').innerText = `${(allTask[id].taskDate.month).slice(0, 3)} ${allTask[id].taskDate.date}, ${allTask[id].taskDate.year}`;
-    document.querySelector('.task-expand').classList.add("active");
-    document.querySelector('.overlay').classList.add("active");
-    taskEditForm.addEventListener("submit", function (e) {
-        e.preventDefault();
-        allTask[id].taskDescription = document.querySelector('#task-description').value;
-        document.querySelector('.task-expand').classList.remove("active");
-        document.querySelector('.overlay').classList.remove("active");
-        console.log(allTask);
-    });
 }
-
-
 
 
 let buttons = document.querySelectorAll('.all-btns .btn');
@@ -229,95 +274,4 @@ buttons.forEach(function (button) {
 
         this.classList.add('active');
     });
-});
-
-taskForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-    document.querySelector('.form-popup').classList.remove("active");
-    document.querySelector('.overlay').classList.remove("active");
-    addTask();
-})
-
-document.querySelector("#completedTaskButton").addEventListener("click", () => {
-    filterCompleted('complete');
-})
-
-document.querySelector("#incompletedTaskButton").addEventListener("click", () => {
-    filterIncompleted('incomplete');
-})
-
-document.querySelector("#allTaskButton").addEventListener("click", () => {
-    showTask(allTask);
-});
-
-
-
-let selectArray = [];
-// document.querySelectorAll(".checkbox").forEach(function(el){
-//     el.addEventListener("click",function(){
-//         id = el.closest(".task-box").getAttribute('data-id');
-//         alert(id)
-//     })
-// })
-
-function checkRemove(id) {
-    var checkbox = document.querySelector(`.checkbox[data-id="${id}"]`);
-    if (checkbox.checked == true) {
-        if (!selectArray.includes(id)) {
-            selectArray.push(id);
-        }
-    }
-    else if (checkbox.checked == false) {
-        const index = selectArray.indexOf(id);
-        // console.log(id);
-        if (index !== -1) {
-            selectArray.splice(index, 1);
-        }
-    }
-    console.log(selectArray)
-    if (selectArray.length == 0) {
-        document.querySelector(".operation-box").classList.remove('active');
-    }
-    else {
-        document.querySelector(".operation-box").classList.add('active');
-    }
-}
-
-function deleteButton() {
-    if (selectArray.length === 0) {
-        alert("Please select a task to delete.");
-        return;
-    }
-
-    // if (confirm("Are you sure you want to remove this task?")) {
-    if (confirm("Are you sure you want to remove this task?")) {
-        // Sort the array in descending order to avoid index issues
-        selectArray.sort((a, b) => b - a);
-
-        for (const index of selectArray) {
-            if (index >= 0 && index < allTask.length) {
-                allTask.splice(index, 1);
-            }
-        }
-
-        showTask(allTask);
-        console.log(allTask);
-    } else {
-        alert("Removal canceled.");
-    }
-    selectArray = [];
-    document.querySelector('.operation-box').classList.remove("active");
-}
-
-flatpickr("#taskDate", {
-    minDate: "today",
-    altInput: true,
-    altFormat: "F j, Y",
-    dateFormat: "Y-m-d",
-});
-
-flatpickr("#taskTime", {
-    enableTime: true,
-    noCalendar: true,
-    dateFormat: "H:i",
 });

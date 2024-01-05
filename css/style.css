@@ -13,7 +13,13 @@
 body {
     background-color: #FFFFEC;
     display: flex;
-  flex-direction: column;
+    justify-content: space-between;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+textarea{
+    resize: none;
 }
 
 .container {
@@ -165,7 +171,7 @@ label {
     }
 }
 
- .loader {
+.loader {
     border: 8px solid #f3f3f3;
     border-radius: 50%;
     border-top: 8px solid #3498db;
@@ -189,7 +195,7 @@ label {
     display: none;
 }
 
-.loader-wrap.active{
+.loader-wrap.active {
     display: flex;
 }
 
@@ -353,7 +359,7 @@ tr:last-child td {
     display: block;
 }
 
-.mobile-head{
+.mobile-head {
     display: none;
 }
 
@@ -373,7 +379,7 @@ tr:last-child td {
     transform: translateX(0%);
 }
 
-.task-expand h2 {
+.task-expand #task-name {
     font-size: 40px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 900;
@@ -436,7 +442,7 @@ tr:last-child td {
     display: inline-block;
     border: none;
     border-radius: 100%;
-    color: #186F65;
+    color: #000000;
     background-color: transparent;
     font-size: 55px;
     cursor: pointer;
@@ -521,8 +527,7 @@ tr:last-child td {
 }
 
 section {
-    margin: 100px 0;
-    min-height: 60vh;
+    margin-bottom: 50px;
 }
 
 .form-popup {
@@ -597,32 +602,132 @@ section {
     grid-column: 1/5;
 }
 
-.all-btns .btn.active{
+.all-btns .btn.active {
     background-color: #f0f424;
 }
 
-.task-box:hover{
+.task-box:hover {
     outline: 2px solid #000000;
 }
 
-.operation-box .btn:hover{
-    outline: 1px solid #fff;
+.operation-box .btn:hover {
+    outline: 1px solid #f0f424;
 }
 
-.back-btn-wrap .back-btn i:hover{
+.back-btn-wrap .back-btn i:hover {
     color: #E5E1DA;
 }
 
-.button-box button:hover{
+.button-box button:hover {
     color: #86B6F6;
 }
 
-.all-btns .btn.active .txt{
-   color: #000000;
+.all-btns .btn.active .txt {
+    color: #000000;
 }
 
-.task-expand .submit{font-size: 40px;color: red;background-color: transparent;border: none;}
-.expand-top{display: flex;align-items: center;justify-content: space-between;margin-bottom: 50px;}
+.task-expand .submit {
+    font-size: 40px;
+    color: red;
+    background-color: transparent;
+    border: none;
+}
+
+.expand-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 50px;
+}
+
+/* Add this CSS to style your modal */
+.confirmation-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.confirmation-modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+button {
+    padding: 10px;
+    cursor: pointer;
+}
+
+
+.task-completed-box {
+    background-color: #C1F2B0;
+    background-image: linear-gradient(315deg, #C1F2B0 0%, #74d680 74%);
+    position: fixed;
+    right: 5%;
+    top: 5%;
+    border-radius: 5px;
+    overflow: hidden;
+    display: none;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.task-completed-box.active {
+    display: block;
+}
+
+.task-completed-box p {
+    font-size: 15px;
+    font-weight: 700;
+    padding: 15px 25px;
+}
+
+.task-completed-box:after {
+    content: "";
+    display: inline-block;
+    width: 100%;
+    height: 3px;
+    position: absolute;
+    bottom: 0;
+    animation: progressAnimation 3s;
+}
+
+.expand-top h2 {
+    font-weight: 700;
+    font-size: 35px;
+    line-height: normal;
+    color: #fff;
+    letter-spacing: 2px;
+}
+
+@keyframes progressAnimation {
+    0% {
+        width: 100%;
+        background-color: #163020;
+    }
+
+    100% {
+        width: 0%;
+        background-color: #163020;
+    }
+}
+
+
 
 @media screen and (max-width:1400px) {
     .task-grid {
@@ -667,22 +772,24 @@ section {
         margin-bottom: 20px;
     }
 
-    .btn,
     .button-box button {
         font-size: 15px;
         background-color: transparent;
         border: none;
         font-size: 40px;
+        padding: 0;
     }
 
-    .form-popup, .task-expand{
+    .form-popup,
+    .task-expand {
         width: 100%;
     }
-    .form-popup.active{
+
+    .form-popup.active {
         transform: translateX(0%);
     }
 
-    .all-btns .txt{
+    .all-btns .txt {
         font-size: 15px;
     }
 
@@ -690,10 +797,16 @@ section {
         margin-bottom: 25px;
     }
 
+    .expand-top h2,
     .form-popup h2 {
         font-weight: 300;
         font-size: 22px;
         letter-spacing: 1px;
+        margin-bottom: 0;
+    }
+
+    .expand-top .button {
+        padding: 0;
     }
 
 }
@@ -734,7 +847,7 @@ section {
         padding: 20px 0;
     }
 
-    .task-expand h2 {
+    .task-expand #task-name {
         font-size: 30px;
     }
 
@@ -765,7 +878,7 @@ section {
         margin: 50px 0;
     }
 
-    .operation-box .txt{
+    .operation-box .txt {
         font-size: 14px;
     }
 }

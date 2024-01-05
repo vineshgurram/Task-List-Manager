@@ -7,41 +7,46 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="./css/nor">
+    <link rel="stylesheet" href="./css/normalize.css">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
     <link rel="manifest" href="/site.webmanifest">
     <title>MyTask App</title>
 </head>
 
 <body>
+    <!-- HEADER  -->
     <header>
         <h1>MY<span>Task App</span></h1>
     </header>
+    <!-- MAIN  -->
     <main>
         <section>
             <div class="container-md">
+                <!-- BUTTONS FOR FILTERING -->
                 <div class="all-btns">
-                    <button onclick="showTask(allTask)" class="btn all-task-btn active">
+                    <button class="btn all-task-btn active" id="allTaskButton">
                         <span class="txt">
                             All
                         </span>
                     </button>
-                    <button onclick="filterCompleted()" class="btn">
+                    <button class="btn" id="completedTaskButton">
                         <span class="txt">Complete</span>
                     </button>
-                    <button onclick="filterIncompleted('incomplete')" class="btn">
+                    <button class="btn" id="incompletedTaskButton">
                         <span class="txt">
                             Incomplete
                         </span>
                     </button>
                 </div>
+                <!-- ALL TASKS -->
                 <div style="position: relative;">
                     <div class="task-grid">
-                        <div class="task-box">
+                        <!-- <div class="task-box">
                             <div class="flex">
                                 <div class="task-box-info">
                                     <h3>Task Name</h3>
@@ -51,101 +56,103 @@
                                     <img src="img/right-up.png" alt="">
                                 </button>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
+                    <!-- LOADER -->
                     <div class="loader-wrap">
                         <div class="loader"></div>
                     </div>
                 </div>
             </div>
         </section>
+        <section>
+            <div class="task-completed-box">
+                <p>Your Task add successfully.</p>
+            </div>
+            <!-- DELETE AND DELETE ALL BUTTONS -->
+            <div class="operation-box">
+                <button class="btn delete-btn" onclick="deleteButton();">
+                    <i class="fa-regular fa-trash-can"></i>
+                    <span class="txt">Delete</span>
+                </button>
+                <button class="btn" onclick="deleteAll();">
+                    <i class="fa-solid fa-check-double"></i>
+                    <span class="txt">Delete all</span>
+                </button>
+            </div>
+            <!-- ADD NEW TASK BUTTON -->
+            <button class="add-task-btn">
+                <i class="fa-solid fa-circle-plus"></i>
+            </button>
+        </section>
+        <section>
+            <div class="task-expand">
+                <form action="" id="taskEditForm">
+                    <div class="expand-top">
+                        <div class="back-btn-wrap">
+                            <div class="back-btn">
+                                <i class="fa-solid fa-circle-left"></i>
+                            </div>
+                        </div>
+                        <h2>Edit Existing Task</h2>
+                        <div class="button-box">
+                            <button type="submit">
+                                <i class="fa-solid fa-circle-check"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="info-wrap">
+                        <div class="mb-50">
+                            <h2 id="task-name">Task Name</h2>
+                            <h3 id="task-day">Monday</h3>
+                            <h3 id="task-date">Task Date</h3>
+                        </div>
+                        <div>
+                            <textarea id="task-description" cols="30" rows="10"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            </div>
+            <div class="mb-50 form-popup">
+                <form id="taskForm">
+                    <div class="add-top-action">
+                        <div class="back-btn-wrap">
+                            <div class="back-btn" type="button">
+                                <i class="fa-solid fa-circle-left"></i>
+                            </div>
+                        </div>
+                        <h2>Add New Task</h2>
+                        <div class="button-box">
+                            <button type="submit" id="submit">
+                                <i class="fa-solid fa-circle-check"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="input-box">
+                        <input type="text" id="taskName" placeholder="Task Name" required>
+                    </div>
+                    <div class="input-box">
+                        <input type="date" id="taskDate" placeholder="Task Date" required>
+                    </div>
+                    <div class="input-box">
+                        <input type="time" id="taskTime" placeholder="Task Time">
+                    </div>
+                    <div class="input-box">
+                        <textarea cols="30" rows="10" placeholder="Task Description" id="taskDescription"></textarea>
+                    </div>
+                </form>
+                <div id="taskList">
+                </div>
+            </div>
+        </section>
     </main>
+    <!-- FOOTER  -->
     <footer>
         <p>&copy; 2023 MyTask App</p>
     </footer>
-    <div class="task-expand">
-        <form action="">
-            <div class="expand-top">
-                <div class="back-btn-wrap">
-                    <div class="back-btn">
-                        <i class="fa-solid fa-circle-left"></i>
-                    </div>
-                </div>
-                <div class="button-box">
-                    <button type="submit">
-                        <i class="fa-solid fa-circle-check"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="info-wrap">
-                <div class="mb-50">
-                    <h2>Task Name</h2>
-                    <h3 id="task-day">Monday</h3>
-                    <h3 id="task-date">Task Date</h3>
-                </div>
-                <div>
-                    <textarea name="" id="task-description" cols="30" rows="10"></textarea>
-                </div>
-        </form>
-    </div>
-    </div>
-    <div class="operation-box">
-        <button class="btn delete-btn" onclick="deleteButton();">
-            <i class="fa-regular fa-trash-can"></i>
-            <span class="txt">Delete</span>
-        </button>
-        <button class="btn" onclick="deleteAll();">
-            <i class="fa-solid fa-check-double"></i>
-            <span class="txt">Delete all</span>
-        </button>
-    </div>
-    <div class="mb-50 form-popup">
-        <form id="taskForm" onsubmit="addTask();return false">
-            <div class="add-top-action">
-                <div class="back-btn-wrap">
-                    <div class="back-btn" type="button">
-                        <i class="fa-solid fa-circle-left"></i>
-                    </div>
-                </div>
-                <h2>Add New Task</h2>
-                <div class="button-box">
-                    <button type="submit" id="submit">
-                        <i class="fa-solid fa-circle-check"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="input-box">
-                <!-- <label for="taskName">Task Name:</label> -->
-                <input type="text" id="taskName" placeholder="Task Name" required>
-            </div>
-            <div class="input-box">
-                <!-- <label for="taskDate"> Task Date:</label> -->
-                <input type="date" id="taskDate" placeholder="Task Date" required>
-            </div>
-            <div class="input-box">
-                <!-- <label for="taskTime">Task Time:</label> -->
-                <input type="time" id="taskTime" placeholder="Task Time">
-            </div>
-            <div class="input-box">
-                <textarea cols="30" rows="10" placeholder="Task Description" id="taskDescription"></textarea>
-            </div>
-        </form>
-        <div id="taskList">
-        </div>
-    </div>
-    <!-- <div class="common-modal">
-        <div>
-            <p></p>
-        </div>
-        <div class="common-modal-btn">
-            <button>Yes</button>
-        <button>Cancel</button>
-        </div> -->
     <div class="overlay">
     </div>
-    <button class="add-task-btn">
-        <i class="fa-solid fa-circle-plus"></i>
-    </button>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="./js/data.js"></script>
     <script src="./js/script.js"></script>
