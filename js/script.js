@@ -52,6 +52,7 @@ function addTask() {
     taskInput.value = "";
     taskDate.value = "";
     taskTime.value = "";
+    taskDescription.value = "";
     completeBox = document.querySelector(".task-completed-box");
     completeBox.classList.add('active');
     setTimeout(function () {
@@ -62,26 +63,26 @@ function addTask() {
 
 
 function showTask(array) {
-    let display1 = "";
+    let display = "";
     array.forEach(function (el, id) {
-        display1 += `<div class="task-box" data-id="${id}">
+        display += `<div class="task-box" data-id="${id}">
             <div class="flex">
-                <div class="task-box-info">
-                <h3>${el.taskName}</h3>  
-                <p>${el.taskDate.fullDate}</p>
-                <p class="task-status">${(el.taskStatus == "Completed") ? "Done" : "Pending"}</p>
-                </div>
                 <div class="action-box">
                     <input type="checkbox" class="checkbox" onclick="checkRemove(${id})" data-id="${id}">
                     <button class="get-details" onclick="fetchDetails(${el.id})">
                         <img src="img/right-up.png" alt="">
                     </button>
                 </div>
+                <div class="task-box-info">
+                <h3>${el.taskName}</h3>  
+                <p>${el.taskDate.fullDate}</p>
+                <p class="task-status">${(el.taskStatus == "Completed") ? "Done" : "Pending"}</p>
+                </div>
             </div>
         </div>`;
     });
     displayLoader();
-    document.querySelector(".task-grid").innerHTML = display1;
+    document.querySelector(".task-grid").innerHTML = display;
 
     if (array.length == 0) {
         document.querySelector(".task-grid").innerHTML = `<h2>No Task Added Yet</td></h2>`;
@@ -311,13 +312,13 @@ function deleteButton() {
 
 flatpickr("#taskDate", {
     minDate: "today",
-    altInput: true,
-    altFormat: "F j, Y",
-    dateFormat: "Y-m-d",
+    dateFormat: "d.m.Y",
+    maxDate: "15.12.2024"
 });
 
 flatpickr("#taskTime", {
     enableTime: true,
     noCalendar: true,
     dateFormat: "H:i",
+    time_24hr: false
 });

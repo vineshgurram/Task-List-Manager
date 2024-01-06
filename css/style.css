@@ -22,14 +22,21 @@ textarea{
     resize: none;
 }
 
+main{
+    min-height: 70vh;
+}
+
 .container {
     width: 80%;
     max-width: 900px;
-    margin: 20px auto 50px;
 }
 
 .mb-50 {
     margin-bottom: 50px;
+}
+
+.mb-30 {
+    margin-bottom: 30px;
 }
 
 h1 {
@@ -39,6 +46,8 @@ h1 {
     text-decoration: underline;
     color: #EC8F5E;
     letter-spacing: -5px;
+    margin: 0;
+    line-height: 1.5;
 }
 
 h1 span {
@@ -46,11 +55,6 @@ h1 span {
     letter-spacing: 2px;
     font-weight: 500;
     color: #0C356A;
-}
-
-
-.input-box {
-    margin-bottom: 10px;
 }
 
 .button-box {
@@ -61,28 +65,18 @@ h1 span {
     margin-right: 5px;
 }
 
-table {
-    width: 100%;
-    padding: 0;
-    background-color: #F5F7F8;
-    border-radius: 5px;
-    overflow: hidden;
-}
-
-thead {
-    background-color: #7AA874;
-    color: #F6F1E9;
-    font-weight: 700;
-}
-
 .input-box input[type="date"] {
     text-transform: uppercase;
 }
 
-.input-box input {
+.input-box input ,.input-box textarea{
+    width: 100%;
     padding: 15px;
     border: none;
-    /* border: 1px solid #191919; */
+    background-color: #f0f424;
+    border-radius: 10px;
+    font-size: 18px;
+    line-height: 1.5;
 }
 
 .input-box input:focus {
@@ -265,10 +259,6 @@ footer {
     margin-right: 10px;
 }
 
-tr:last-child td {
-    border-bottom: none;
-}
-
 .form-popup {
     position: fixed;
     background-color: #1F1717;
@@ -276,15 +266,20 @@ tr:last-child td {
     right: 0;
     left: 0;
     bottom: 0;
-    padding: 20px;
+    padding: 30px;
     z-index: 2;
     transform: translateX(200%);
     transition: 500ms ease all;
+    height: 100vh;
+    width: 50%;
+    background-color: #000;
 }
 
 .form-popup.active {
     transform: translateX(100%);
 }
+
+
 
 .task-box .flex {
     display: flex;
@@ -306,7 +301,7 @@ tr:last-child td {
     background-color: #f0f424;
     padding: 20px;
     border-radius: 20px;
-    min-height: 200px;
+    min-height: 230px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     display: flex;
     align-items: end;
@@ -368,7 +363,7 @@ tr:last-child td {
     background-color: #000;
     top: 0;
     bottom: 0;
-    padding: 20px;
+    padding: 30px;
     width: 50%;
     z-index: 2;
     transform: translateX(-100%);
@@ -384,7 +379,6 @@ tr:last-child td {
     font-family: 'Montserrat', sans-serif;
     font-weight: 900;
     text-decoration: none;
-    margin-bottom: 20px;
     color: #fff;
 }
 
@@ -393,16 +387,14 @@ tr:last-child td {
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
     text-decoration: none;
-    margin-bottom: 10px;
     color: #fff;
 }
 
 .task-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 50px;
     background-color: #fff;
-    padding: 20px;
     border-radius: 20px;
 }
 
@@ -434,7 +426,7 @@ tr:last-child td {
     width: 40px;
 }
 
-.task-expand .info-wrap {
+.task-expand .info-wrap ,.form-popup .input-box{
     padding: 0 5%;
 }
 
@@ -458,13 +450,15 @@ tr:last-child td {
 
 .task-expand textarea {
     display: block;
-    width: 90%;
+    width: 100%;
     border-radius: 10px;
     background-color: #f0f424;
     border: none;
     padding: 20px;
     font-family: 'Montserrat';
     font-weight: 500;
+    line-height: 1.5;
+    font-size: 18px;
 }
 
 
@@ -526,23 +520,17 @@ tr:last-child td {
     font-weight: 500;
 }
 
-section {
+.section-display {
     margin-bottom: 50px;
 }
 
-.form-popup {
-    height: 100vh;
-    width: 50%;
-    background-color: #000;
-}
 
 .all-btns {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: 40%;
-    margin: 0 auto;
-    padding: 20px 0;
+    justify-content: center;
+    gap: 50px;
+    margin-bottom: 50px;
 }
 
 .all-btns .btn {
@@ -565,19 +553,6 @@ section {
     font-size: 17px;
 }
 
-.task-expand textarea {
-    width: 100%;
-}
-
-.input-box textarea,
-.input-box input {
-    width: 100%;
-    padding: 15px;
-    border: none;
-    background-color: #f0f424;
-    border-radius: 10px;
-}
-
 .input-box textarea {
     border-radius: 10px;
     resize: none;
@@ -594,7 +569,6 @@ section {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 100px;
 }
 
 .task-grid h2 {
@@ -626,21 +600,12 @@ section {
     color: #000000;
 }
 
-.task-expand .submit {
-    font-size: 40px;
-    color: red;
-    background-color: transparent;
-    border: none;
-}
-
 .expand-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 50px;
 }
 
-/* Add this CSS to style your modal */
 .confirmation-modal {
     display: none;
     position: fixed;
@@ -670,7 +635,6 @@ section {
 }
 
 button {
-    padding: 10px;
     cursor: pointer;
 }
 
@@ -730,16 +694,52 @@ button {
 
 
 @media screen and (max-width:1400px) {
-    .task-grid {
-        grid-template-columns: repeat(3, 1fr);
+    .task-grid,.all-btns{
+        grid-gap: 40px;
     }
+
+    .action-box input[type="checkbox"] ,.action-box input[type="checkbox"]:checked,.task-box button{
+        width: 45px;
+        height: 45px;
+    }
+
+    .input-box input, .input-box textarea,.task-expand textarea{
+        font-size: 15px;
+    }
+
+    .form-popup{
+        padding: 25px;
+    }
+
+    
+}
+
+@media screen and (max-width:1400px){
+    .task-grid, .all-btns {
+        grid-gap: 30px;
+    }
+
+    
+.action-box input[type="checkbox"], .action-box input[type="checkbox"]:checked, .task-box button {
+    width: 40px;
+    height: 40px;
+}
+
+.task-box{
+    min-height: 200px;
+}
+
+.form-popup h2 ,.expand-top h2{
+    font-weight: 700;
+    font-size: 30px;
+}
+
+.all-btns .txt {
+    font-size: 16px;
+}
 }
 
 @media screen and (max-width:1279px) {
-    .all-btns {
-        width: 70%;
-        padding: 10px 0;
-    }
 
     .action-box input[type="checkbox"],
     .action-box input[type="checkbox"]:checked {
@@ -755,8 +755,21 @@ button {
         font-size: 17px;
     }
 
-    .add-top-action {
-        margin-bottom: 50px;
+    .mb-50 {
+        margin-bottom: 45px;
+    }
+
+    .form-popup {
+        padding: 20px;
+    }
+
+    .mb-30 {
+        margin-bottom: 25px;
+    }
+
+    .form-popup h2, .expand-top h2 {
+        font-weight: 700;
+        font-size: 25px;
     }
 }
 
@@ -817,9 +830,13 @@ button {
         margin-bottom: 30px;
     }
 
-    .all-btns {
-        width: auto;
+    .all-btns .txt {
+        letter-spacing: normal;
     }
+
+    .all-btns {
+        gap: 20px;
+    }    
 
     .task {
         flex-direction: column;
@@ -872,10 +889,6 @@ button {
 
     .task-box {
         height: 190px;
-    }
-
-    section {
-        margin: 50px 0;
     }
 
     .operation-box .txt {

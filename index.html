@@ -13,7 +13,6 @@
     <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
     <link rel="manifest" href="/site.webmanifest">
     <title>MyTask App</title>
 </head>
@@ -21,28 +20,28 @@
 <body>
     <!-- HEADER  -->
     <header>
-        <h1>MY<span>Task App</span></h1>
+        <h1 class="mb-30">MY<span>Task App</span></h1>
+        <!-- BUTTONS FOR FILTERING -->
+        <div class="all-btns">
+            <button class="btn all-task-btn active" id="allTaskButton">
+                <span class="txt">
+                    All
+                </span>
+            </button>
+            <button class="btn" id="completedTaskButton">
+                <span class="txt">Complete</span>
+            </button>
+            <button class="btn" id="incompletedTaskButton">
+                <span class="txt">
+                    Incomplete
+                </span>
+            </button>
+        </div>
     </header>
     <!-- MAIN  -->
     <main>
-        <section>
+        <section class="section section-display">
             <div class="container-md">
-                <!-- BUTTONS FOR FILTERING -->
-                <div class="all-btns">
-                    <button class="btn all-task-btn active" id="allTaskButton">
-                        <span class="txt">
-                            All
-                        </span>
-                    </button>
-                    <button class="btn" id="completedTaskButton">
-                        <span class="txt">Complete</span>
-                    </button>
-                    <button class="btn" id="incompletedTaskButton">
-                        <span class="txt">
-                            Incomplete
-                        </span>
-                    </button>
-                </div>
                 <!-- ALL TASKS -->
                 <div style="position: relative;">
                     <div class="task-grid">
@@ -65,7 +64,7 @@
                 </div>
             </div>
         </section>
-        <section>
+        <section class="section">
             <div class="task-completed-box">
                 <p>Your Task add successfully.</p>
             </div>
@@ -81,16 +80,16 @@
                 </button>
             </div>
             <!-- ADD NEW TASK BUTTON -->
-            <button class="add-task-btn">
+            <button class="add-task-btn" title="Add New Task">
                 <i class="fa-solid fa-circle-plus"></i>
             </button>
         </section>
-        <section>
+        <section class="section">
             <div class="task-expand">
                 <form action="" id="taskEditForm">
-                    <div class="expand-top">
+                    <div class="expand-top mb-50">
                         <div class="back-btn-wrap">
-                            <div class="back-btn">
+                            <div class="back-btn" title="Go Back">
                                 <i class="fa-solid fa-circle-left"></i>
                             </div>
                         </div>
@@ -103,8 +102,8 @@
                     </div>
                     <div class="info-wrap">
                         <div class="mb-50">
-                            <h2 id="task-name">Task Name</h2>
-                            <h3 id="task-day">Monday</h3>
+                            <h2 id="task-name" class="mb-30">Task Name</h2>
+                            <h3 id="task-day" class="mb-30">Monday</h3>
                             <h3 id="task-date">Task Date</h3>
                         </div>
                         <div>
@@ -114,11 +113,11 @@
                 </form>
             </div>
             </div>
-            <div class="mb-50 form-popup">
+            <div class="form-popup">
                 <form id="taskForm">
-                    <div class="add-top-action">
+                    <div class="add-top-action mb-50">
                         <div class="back-btn-wrap">
-                            <div class="back-btn" type="button">
+                            <div class="back-btn" type="button" title="Go Back">
                                 <i class="fa-solid fa-circle-left"></i>
                             </div>
                         </div>
@@ -129,16 +128,16 @@
                             </button>
                         </div>
                     </div>
-                    <div class="input-box">
+                    <div class="input-box mb-30">
                         <input type="text" id="taskName" placeholder="Task Name" required>
                     </div>
-                    <div class="input-box">
+                    <div class="input-box mb-30">
                         <input type="date" id="taskDate" placeholder="Task Date" required>
                     </div>
-                    <div class="input-box">
+                    <div class="input-box mb-30">
                         <input type="time" id="taskTime" placeholder="Task Time">
                     </div>
-                    <div class="input-box">
+                    <div class="input-box mb-30">
                         <textarea cols="30" rows="10" placeholder="Task Description" id="taskDescription"></textarea>
                     </div>
                 </form>
