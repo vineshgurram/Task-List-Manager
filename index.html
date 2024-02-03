@@ -13,7 +13,8 @@
     <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <!-- <link rel="manifest" href="/site.webmanifest"> -->
     <title>MyTask App</title>
 </head>
 
@@ -36,6 +37,11 @@
                     Incomplete
                 </span>
             </button>
+            <!-- <button class="btn" id="deletedTaskButton">
+                <span class="txt">
+                    Deleted Items
+                </span>
+            </button> -->
         </div>
     </header>
     <!-- MAIN  -->
@@ -45,6 +51,33 @@
                 <!-- ALL TASKS -->
                 <div style="position: relative;">
                     <div class="task-grid">
+                        <!-- <div class="task-box" data-id="${id}">
+                            <div class="flex">
+                                <div class="action-box">
+                                    <input type="checkbox" class="checkbox" onclick="checkRemove(${id})"
+                                        data-id="${id}">
+                                </div>
+                                <div class="task-box-info">
+                                    <h3>${el.taskName}</h3>
+                                    <p>${el.taskDate.fullDate}</p>
+                                <p class="task-status ${(el.taskStatus == " Completed") ? 'completed' : 'pending'
+                                    }">${(el.taskStatus == "Completed") ? "Done" : "Pending"}</p>
+                                </div>
+                                <div class="action-box-end">
+                                    <div class="mb-50">
+                                        <button class="task-completed-btn">
+                                            <i class="fa-solid fa-check"></i>
+                                        </button>
+                                        <button class="task-delete-btn" onclick="removeTask(id)">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </button>
+                                    </div>
+                                    <button class="get-details" onclick="fetchDetails(${el.id})">
+                                        <i class="fa-solid fa-pencil"></i><span class="txt">Edit</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div> -->
                         <!-- <div class="task-box">
                             <div class="flex">
                                 <div class="task-box-info">
@@ -65,8 +98,11 @@
             </div>
         </section>
         <section class="section">
+            <!-- TASK NOTIFICATION BOX -->
             <div class="task-completed-box">
-                <p>Your Task add successfully.</p>
+                <div class="task-progress">
+                    <p>Notification Message</p>
+                </div>
             </div>
             <!-- DELETE AND DELETE ALL BUTTONS -->
             <div class="operation-box">
@@ -79,10 +115,15 @@
                     <span class="txt">Delete all</span>
                 </button>
             </div>
-            <!-- ADD NEW TASK BUTTON -->
-            <button class="add-task-btn" title="Add New Task">
-                <i class="fa-solid fa-circle-plus"></i>
-            </button>
+            <div class="sticky-btn-wrap">
+                <!-- ADD NEW TASK BUTTON -->
+                <button class="add-task-btn" title="Add New Task">
+                    <i class="fa-solid fa-circle-plus"></i>
+                </button>
+                <!-- <button class="trash-btn" title="View Deleted Task">
+                <i class="fa-solid fa-dumpster"></i>
+            </button> -->
+            </div>
         </section>
         <section class="section">
             <div class="task-expand">
@@ -153,6 +194,7 @@
     <div class="overlay">
     </div>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="./js/data.js"></script>
     <script src="./js/script.js"></script>
 </body>

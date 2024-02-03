@@ -11,6 +11,7 @@ let modalPopupParagraph = document.querySelector(".common-modal p");
 let commonModal = document.querySelector(".overlay");
 let tableRow = document.querySelectorAll(".tr");
 let taskDescription = document.querySelector("#taskDescription");
+let notificationText = document.querySelector(".task-completed-box p");
 const day = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -21,6 +22,9 @@ function displayModal(message) {
     });
 }
 
+function saveTasksToLocalStorage() {
+    localStorage.setItem('tasks', JSON.stringify(allTask));
+}
 
 function addTask() {
     let taskInputValue = taskInput.value;
@@ -39,7 +43,7 @@ function addTask() {
         taskStatus: "Incompleted",
         taskDescription: taskDescriptionValue,
         taskDate: {
-            fullDate: `${taskDayValue} ${taskDateValue} ${month[taskDateObj.getMonth()]}, ${taskDateObj.getFullYear()}`,
+            fullDate: `${taskDayValue.slice(0, 3)}, ${taskDateValue} ${month[taskDateObj.getMonth()]}, ${taskDateObj.getFullYear()}`,
             day: taskDayValue,
             date: taskDateValue,
             month: month[taskDateObj.getMonth()],
@@ -49,57 +53,88 @@ function addTask() {
 
 
     allTask.push(taskObj);
+    saveTasksToLocalStorage();
     taskInput.value = "";
     taskDate.value = "";
     taskTime.value = "";
     taskDescription.value = "";
     completeBox = document.querySelector(".task-completed-box");
+    notificationText.innerText = "Your task has been added successfully..";
     completeBox.classList.add('active');
     setTimeout(function () {
         completeBox.classList.remove('active');
-    }, 3000);
+        // notificationText.innerText = "Notification Message";
+    }, 1500);
     showTask(allTask);
 }
 
+// Function to get tasks from local storage
+function getTasksFromLocalStorage() {
+    const storedTasks = localStorage.getItem('tasks');
+    if (storedTasks) {
+        allTask = JSON.parse(storedTasks);
+        showTask(allTask);
+    }
+}
 
 function showTask(array) {
     let display = "";
     array.forEach(function (el, id) {
         display += `<div class="task-box" data-id="${id}">
-            <div class="flex">
-                <div class="action-box">
-                    <input type="checkbox" class="checkbox" onclick="checkRemove(${id})" data-id="${id}">
-                    <button class="get-details" onclick="fetchDetails(${el.id})">
-                        <img src="img/right-up.png" alt="">
+        <div class="flex">
+            <div class="action-box">
+                <input type="checkbox" class="checkbox" onclick="checkRemove(${id})"
+                    data-id="${id}">
+            </div>
+            <div class="task-box-info">
+                <h3>${el.taskName}</h3>
+                <p>${el.taskDate.fullDate}</p>
+            <p class="task-status ${(el.taskStatus == "Completed") ? 'completed' : 'pending'
+            }"><i class="fa-solid ${(el.taskStatus == "Completed") ? 'fa-circle-check' : 'fa-hourglass-half'}"></i>${(el.taskStatus == "Completed") ? "Done" : "Pending"}</p>
+            </div>
+            <div class="action-box-end">
+                <div class="">
+                    <button class="task-completed-btn" onclick="completedTask(${el.id})">
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                    <button class="task-delete-btn" onclick="removeTask(id)">
+                        <i class="fa-solid fa-trash-can"></i>
                     </button>
                 </div>
-                <div class="task-box-info">
-                <h3>${el.taskName}</h3>  
-                <p>${el.taskDate.fullDate}</p>
-                <p class="task-status">${(el.taskStatus == "Completed") ? "Done" : "Pending"}</p>
-                </div>
+                <button class="get-details" onclick="fetchDetails(${el.id})">
+                    <i class="fa-solid fa-pencil"></i><span class="txt">Edit</span>
+                </button>
             </div>
-        </div>`;
+        </div>
+    </div>`;
     });
     displayLoader();
     document.querySelector(".task-grid").innerHTML = display;
 
     if (array.length == 0) {
-        document.querySelector(".task-grid").innerHTML = `<h2>No Task Added Yet</td></h2>`;
+        document.querySelector(".task-grid").innerHTML = `<h2>No tasks have been added yet</td></h2>`;
     }
 
-    let taskStatusElement = document.querySelector(".task-status");
-    if (taskStatusElement.innerText == "Done") {
-        taskStatusElement.style.color = "#0174BE";
-    }
+    // let taskStatusElement = document.querySelector(".task-status");
+    // if (taskStatusElement.innerText == "Done") {
+    //     taskStatusElement.style.color = "#0174BE";
+    // }
 
 }
 
 
 function removeTask(id) {
     allTask.splice(id, 1);
+    saveTasksToLocalStorage();
     showTask(allTask);
 }
+
+// function completedTask(id) {
+//     alert("hii")
+//     id.taskStatus = "Completed";
+//     saveTasksToLocalStorage();
+//     showTask(allTask);
+// }
 
 
 function filterCompleted() {
@@ -121,7 +156,10 @@ function filterIncompleted() {
 
 
 function completedTask(id) {
+    console.log(allTask[id].taskStatus)
     allTask[id].taskStatus = "Completed";
+    console.log(allTask[id].taskStatus);
+    saveTasksToLocalStorage();
     showTask(allTask);
 }
 
@@ -145,6 +183,7 @@ function deleteAll() {
             allTask.splice(0, allTask.length);
             document.querySelector('.operation-box').classList.remove("active");
             setTimeout(function () {
+                saveTasksToLocalStorage();
                 showTask(allTask);
             }, 500);
         }
@@ -165,8 +204,6 @@ function toggleDeleteButton(btn) {
     }
 }
 
-
-showTask(allTask);
 
 
 document.querySelector(".add-task-btn").addEventListener("click", function () {
@@ -212,14 +249,19 @@ function fetchDetails(id) {
     taskEditForm.addEventListener("submit", function (e) {
         e.preventDefault();
         allTask[id].taskDescription = document.querySelector('#task-description').value;
+        localStorage.setItem('tasks', JSON.stringify(allTask));
         document.querySelector('.task-expand').classList.remove("active");
         document.querySelector('.overlay').classList.remove("active");
-        console.log(allTask);
+        completeBox = document.querySelector(".task-completed-box");
+        notificationText.innerText = "Your task has been updated successfully..";
+        completeBox.classList.add('active');
+        setTimeout(function () {
+            completeBox.classList.remove('active');
+            // notificationText.innerText = "Notification Message";
+        }, 1500);
+        // console.log(allTask);
     });
 }
-
-
-
 
 let buttons = document.querySelectorAll('.all-btns .btn');
 buttons.forEach(function (button) {
@@ -297,12 +339,14 @@ function deleteButton() {
 
         for (const index of selectArray) {
             if (index >= 0 && index < allTask.length) {
-                allTask.splice(index, 1);
+                const deletedTask = allTask.splice(index, 1)[0];
+                trashItems.push[deletedTask];
+                console.log(trashItems)
             }
         }
-
+        saveTasksToLocalStorage();
         showTask(allTask);
-        console.log(allTask);
+        // console.log(allTask);
     } else {
         alert("Removal canceled.");
     }
@@ -310,15 +354,22 @@ function deleteButton() {
     document.querySelector('.operation-box').classList.remove("active");
 }
 
-flatpickr("#taskDate", {
-    minDate: "today",
-    dateFormat: "d.m.Y",
-    maxDate: "15.12.2024"
-});
+// flatpickr("#taskDate", {
+//     minDate: "today",
+//     dateFormat: "d.m.Y",
+//     maxDate: "15.12.2024"
+// });
 
-flatpickr("#taskTime", {
-    enableTime: true,
-    noCalendar: true,
-    dateFormat: "H:i",
-    time_24hr: false
-});
+// flatpickr("#taskTime", {
+//     enableTime: true,
+//     noCalendar: true,
+//     dateFormat: "H:i",
+//     time_24hr: false
+// });
+
+// showTask(allTask);
+getTasksFromLocalStorage();
+
+// allTask = localStorage.getItem('tasks');
+// allTask=JSON.parse(allTask)
+// console.log(allTask,typeof allTask)
