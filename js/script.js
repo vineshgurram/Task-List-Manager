@@ -93,8 +93,9 @@ function showTask(array) {
             }"><i class="fa-solid ${(el.taskStatus == "Completed") ? 'fa-circle-check' : 'fa-hourglass-half'}"></i>${(el.taskStatus == "Completed") ? "Done" : "Pending"}</p>
             </div>
             <div class="action-box-end">
-                <div class="">
-                    <button class="task-completed-btn" onclick="completedTask(${el.id})">
+                <div class="complete-delete">
+                    <button class="task-completed-btn ${(el.taskStatus == "Completed") ? 'd-none' : ''
+                }" onclick="completedTask(${el.id})">
                         <i class="fa-solid fa-check"></i>
                     </button>
                     <button class="task-delete-btn" onclick="removeTask(id)">
@@ -112,7 +113,7 @@ function showTask(array) {
     document.querySelector(".task-grid").innerHTML = display;
 
     if (array.length == 0) {
-        document.querySelector(".task-grid").innerHTML = `<h2>No tasks have been added yet</td></h2>`;
+        document.querySelector(".task-grid").innerHTML = `<h2>Add task to get started</h2>`;
     }
 
     // let taskStatusElement = document.querySelector(".task-status");
@@ -127,14 +128,14 @@ function removeTask(id) {
     allTask.splice(id, 1);
     saveTasksToLocalStorage();
     showTask(allTask);
+    completeBox = document.querySelector(".task-completed-box");
+    notificationText.innerText = "Your task has been removed successfully..";
+    completeBox.classList.add('active');
+    setTimeout(function () {
+        completeBox.classList.remove('active');
+        // notificationText.innerText = "Notification Message";
+    }, 1500);
 }
-
-// function completedTask(id) {
-//     alert("hii")
-//     id.taskStatus = "Completed";
-//     saveTasksToLocalStorage();
-//     showTask(allTask);
-// }
 
 
 function filterCompleted() {
@@ -161,6 +162,15 @@ function completedTask(id) {
     console.log(allTask[id].taskStatus);
     saveTasksToLocalStorage();
     showTask(allTask);
+    completeBox = document.querySelector(".task-completed-box");
+    notificationText.innerText = "Congratulations, you have successfully completed your task.";
+    completeBox.classList.add('active');
+    completeBox.classList.add('alert');
+    setTimeout(function () {
+        completeBox.classList.remove('active');
+        // notificationText.innerText = "Notification Message";
+    }, 1500);
+    completeBox.classList.remove('alert');
 }
 
 
@@ -293,6 +303,10 @@ document.querySelector("#allTaskButton").addEventListener("click", () => {
     showTask(allTask);
 });
 
+document.querySelector("#deletedTaskButton").addEventListener("click", () => {
+    alert("Currently this feature is on Development stage.")
+});
+
 
 
 let selectArray = [];
@@ -373,3 +387,9 @@ getTasksFromLocalStorage();
 // allTask = localStorage.getItem('tasks');
 // allTask=JSON.parse(allTask)
 // console.log(allTask,typeof allTask)
+
+// window.onload = function() {
+//     // Add your code here to run when the window is fully loaded
+//     document.querySelector('.outer-loader-wrap').classList.add('active');
+// };
+  
