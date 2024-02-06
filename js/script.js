@@ -95,7 +95,7 @@ function showTask(array) {
             <div class="action-box-end">
                 <div class="complete-delete">
                     <button class="task-completed-btn ${(el.taskStatus == "Completed") ? 'd-none' : ''
-                }" onclick="completedTask(${el.id})">
+            }" onclick="completedTask(${el.id})">
                         <i class="fa-solid fa-check"></i>
                     </button>
                     <button class="task-delete-btn" onclick="removeTask(id)">
@@ -113,7 +113,7 @@ function showTask(array) {
     document.querySelector(".task-grid").innerHTML = display;
 
     if (array.length == 0) {
-        document.querySelector(".task-grid").innerHTML = `<h2>Add task to get started</h2>`;
+        document.querySelector(".task-grid").innerHTML = `<div class="h2"><i class="fa-solid fa-face-meh"></i><div><h2>No tasks have been added yet</h2>`;
     }
 
     // let taskStatusElement = document.querySelector(".task-status");
@@ -125,7 +125,10 @@ function showTask(array) {
 
 
 function removeTask(id) {
-    allTask.splice(id, 1);
+    console.log(trashItems);
+    let removedTask = allTask.splice(id, 1);
+    console.log(trashItems);
+    trashItems.push(removedTask[0]);
     saveTasksToLocalStorage();
     showTask(allTask);
     completeBox = document.querySelector(".task-completed-box");
@@ -304,21 +307,16 @@ document.querySelector("#allTaskButton").addEventListener("click", () => {
 });
 
 document.querySelector("#deletedTaskButton").addEventListener("click", () => {
-    alert("Currently this feature is on Development stage.")
+    // alert("Currently this feature is on Development stage.")
+    filterDeleted();
 });
 
 
-
 let selectArray = [];
-// document.querySelectorAll(".checkbox").forEach(function(el){
-//     el.addEventListener("click",function(){
-//         id = el.closest(".task-box").getAttribute('data-id');
-//         alert(id)
-//     })
-// })
 
 function checkRemove(id) {
     var checkbox = document.querySelector(`.checkbox[data-id="${id}"]`);
+    let deleteButton = document.querySelectorAll('.task-delete-btn');
     if (checkbox.checked == true) {
         if (!selectArray.includes(id)) {
             selectArray.push(id);
@@ -334,9 +332,15 @@ function checkRemove(id) {
     console.log(selectArray)
     if (selectArray.length == 0) {
         document.querySelector(".operation-box").classList.remove('active');
+        deleteButton.forEach(function (button) {
+            button.classList.remove("active")
+        });
     }
     else {
         document.querySelector(".operation-box").classList.add('active');
+        deleteButton.forEach(function (button) {
+            button.classList.add("active")
+        });
     }
 }
 
@@ -384,12 +388,38 @@ function deleteButton() {
 // showTask(allTask);
 getTasksFromLocalStorage();
 
-// allTask = localStorage.getItem('tasks');
-// allTask=JSON.parse(allTask)
-// console.log(allTask,typeof allTask)
+let taskBoxes = document.querySelectorAll(".task-box");
+taskBoxes.forEach((box) => {
+    box.addEventListener("dblclick", function () {
+        id = box.getAttribute("data-id");
+        fetchDetails(id);
+    })
+})
 
-// window.onload = function() {
-//     // Add your code here to run when the window is fully loaded
-//     document.querySelector('.outer-loader-wrap').classList.add('active');
-// };
-  
+
+const hamburgerMenu = document.querySelector(".menu");
+const closeHamburgerMenu = document.querySelector(".close-menu");
+hamburgerMenu.addEventListener("click", function (event) {
+    event.preventDefault();
+    // hamburgerMenu.classList.toggle("active")
+    hamburgerMenu.closest(".sidebar").classList.toggle("active");
+    document.querySelector('.menu-overlay').classList.toggle("active");
+});
+
+
+// function filterDeleted() {
+//     let deletedTask = trashItems.map(function (el) {
+//         return el
+//     });
+//     console.log(deletedTask);
+//     displayLoader();
+//     showTask(completed);
+// }
+
+let deleteTask = trashItems.map(function(el){
+    return el.id
+})
+
+console.log(deleteTask)
+
+

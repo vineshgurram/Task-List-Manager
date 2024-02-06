@@ -14,184 +14,185 @@
     <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> -->
     <!-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"> -->
-    <link rel="manifest" href="/site.webmanifest">
     <title>All Tasks</title>
 </head>
 
 <body>
-    <!-- HEADER  -->
-    <header>
-        <h1 class="mb-30">MY<span>Task App</span></h1>
+    <aside class="sidebar">
+        <!-- HEADER  -->
+        <header>
+            <button class="menu">
+                <div class="inner-menu">
+                    <span class="btn btn-1"></span>
+                    <span class="btn btn-2"></span>
+                    <span class="btn btn-3"></span>
+                </div>
+            </button>
+            <h5 class="close-menu">
+                MENU
+            </h5>
+            <a href="index.html">
+                <h1 class="">MYTask App</h1>
+            </a>
+        </header>
         <!-- BUTTONS FOR FILTERING -->
         <div class="all-btns">
-            <button class="btn all-task-btn active" id="allTaskButton">
+            <!-- <div class="btn title">
                 <span class="txt">
-                    All
+                    TASKS
                 </span>
+            </div> -->
+            <button class="btn all-task-btn active" id="allTaskButton">
+                <div style="position: relative;">
+                    <i class="fa-solid fa-bars-progress"></i>
+                    <span class="txt">
+                        All
+                    </span>
+                </div>
             </button>
             <button class="btn" id="completedTaskButton">
-                <span class="txt">Complete</span>
+                <div style="position: relative;"><i class="fa-solid fa-circle-check"></i>
+                    <span class="txt">Completed</span>
+                </div>
             </button>
             <button class="btn" id="incompletedTaskButton">
-                <span class="txt">
-                    Incomplete
-                </span>
+                <div style="position: relative;">
+                    <i class="fa-solid fa-hourglass-half"></i>
+                    <span class="txt">
+                        Incomplete
+                    </span>
+                </div>
             </button>
             <button class="btn" id="deletedTaskButton">
-                <span class="txt">
-                    Deleted Items
-                </span>
+                <div style="position: relative;">
+                    <i class="fa-solid fa-dumpster"></i>
+                    <span class="txt">
+                        Deleted Tasks
+                    </span>
+                </div>
             </button>
         </div>
-    </header>
-    <!-- MAIN  -->
-    <main>
-        <section class="section section-display">
-            <div class="container-md">
-                <!-- ALL TASKS -->
-                <div style="position: relative;">
-                    <div class="task-grid">
-                        <!-- <div class="task-box" data-id="${id}">
-                            <div class="flex">
-                                <div class="action-box">
-                                    <input type="checkbox" class="checkbox" onclick="checkRemove(${id})"
-                                        data-id="${id}">
-                                </div>
-                                <div class="task-box-info">
-                                    <h3>${el.taskName}</h3>
-                                    <p>${el.taskDate.fullDate}</p>
-                                <p class="task-status ${(el.taskStatus == " Completed") ? 'completed' : 'pending'
-                                    }">${(el.taskStatus == "Completed") ? "Done" : "Pending"}</p>
-                                </div>
-                                <div class="action-box-end">
-                                    <div class="mb-50">
-                                        <button class="task-completed-btn">
-                                            <i class="fa-solid fa-check"></i>
-                                        </button>
-                                        <button class="task-delete-btn" onclick="removeTask(id)">
-                                            <i class="fa-solid fa-trash-can"></i>
-                                        </button>
-                                    </div>
-                                    <button class="get-details" onclick="fetchDetails(${el.id})">
-                                        <i class="fa-solid fa-pencil"></i><span class="txt">Edit</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div> -->
-                        <!-- <div class="task-box">
-                            <div class="flex">
-                                <div class="task-box-info">
-                                    <h3>Task Name</h3>
-                                    <p>Tuesday 20th December 2023</p>
-                                </div>
-                                <button>
-                                    <img src="img/right-up.png" alt="">
-                                </button>
-                            </div>
-                        </div> -->
-                    </div>
-                    <!-- LOADER -->
-                    <div class="loader-wrap">
-                        <div class="loader"></div>
+    </aside>
+    <div class="mainbar">
+        <!-- MAIN  -->
+        <main>
+            <header>
+                <h1 class="">
+                    <a href="index.html">
+                        MYTask App
+                    </a>
+                </h1>
+            </header>
+            <section class="section section-display">
+                <div class="">
+                    <!-- ALL TASKS -->
+                    <div style="position: relative;">
+                        <div class="task-grid">
+                        </div>
+                        <!-- LOADER -->
+                        <div class="loader-wrap">
+                            <div class="loader"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
-        <section class="section">
-            <!-- TASK NOTIFICATION BOX -->
-            <div class="task-completed-box">
-                <div class="task-progress">
-                    <p>Notification Message</p>
+            </section>
+            <section class="section">
+                <!-- TASK NOTIFICATION BOX -->
+                <div class="task-completed-box">
+                    <div class="task-progress">
+                        <p>Notification Message</p>
+                    </div>
                 </div>
-            </div>
-            <!-- DELETE AND DELETE ALL BUTTONS -->
-            <div class="operation-box">
-                <button class="btn delete-btn" onclick="deleteButton();">
-                    <i class="fa-regular fa-trash-can"></i>
-                    <span class="txt">Delete</span>
-                </button>
-                <button class="btn" onclick="deleteAll();">
-                    <i class="fa-solid fa-check-double"></i>
-                    <span class="txt">Delete all</span>
-                </button>
-            </div>
-            <div class="sticky-btn-wrap">
-                <!-- ADD NEW TASK BUTTON -->
-                <button class="add-task-btn" title="Add New Task">
-                    <i class="fa-solid fa-circle-plus"></i>
-                </button>
-                <!-- <button class="trash-btn" title="View Deleted Task">
-                <i class="fa-solid fa-dumpster"></i>
-            </button> -->
-            </div>
-        </section>
-        <section class="section">
-            <div class="task-expand">
-                <form action="" id="taskEditForm">
-                    <div class="expand-top mb-50">
-                        <div class="back-btn-wrap">
-                            <div class="back-btn" title="Go Back">
-                                <i class="fa-solid fa-circle-left"></i>
-                            </div>
-                        </div>
-                        <h2>Edit Existing Task</h2>
-                        <div class="button-box">
-                            <button type="submit">
-                                <i class="fa-solid fa-circle-check"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="info-wrap">
-                        <div class="mb-50">
-                            <h2 id="task-name" class="mb-30">Task Name</h2>
-                            <h3 id="task-day" class="mb-30">Monday</h3>
-                            <h3 id="task-date">Task Date</h3>
-                        </div>
-                        <div>
-                            <textarea id="task-description" cols="30" rows="10"></textarea>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            </div>
-            <div class="form-popup">
-                <form id="taskForm">
-                    <div class="add-top-action mb-50">
-                        <div class="back-btn-wrap">
-                            <div class="back-btn" type="button" title="Go Back">
-                                <i class="fa-solid fa-circle-left"></i>
-                            </div>
-                        </div>
-                        <h2>Add New Task</h2>
-                        <div class="button-box">
-                            <button type="submit" id="submit">
-                                <i class="fa-solid fa-circle-check"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="input-box mb-30">
-                        <input type="text" id="taskName" placeholder="Task Name" required>
-                    </div>
-                    <div class="input-box mb-30">
-                        <input type="date" id="taskDate" placeholder="Task Date" required>
-                    </div>
-                    <div class="input-box mb-30">
-                        <input type="time" id="taskTime" placeholder="Task Time">
-                    </div>
-                    <div class="input-box mb-30">
-                        <textarea cols="30" rows="10" placeholder="Task Description" id="taskDescription"></textarea>
-                    </div>
-                </form>
-                <div id="taskList">
+                <!-- DELETE AND DELETE ALL BUTTONS -->
+                <div class="operation-box">
+                    <button class="btn delete-btn" onclick="deleteButton();">
+                        <i class="fa-regular fa-trash-can"></i>
+                        <span class="txt">Delete</span>
+                    </button>
+                    <button class="btn" onclick="deleteAll();">
+                        <i class="fa-solid fa-check-double"></i>
+                        <span class="txt">Delete all</span>
+                    </button>
                 </div>
+                <div class="sticky-btn-wrap">
+                    <!-- ADD NEW TASK BUTTON -->
+                    <button class="add-task-btn" title="Add New Task">
+                        <i class="fa-solid fa-circle-plus"></i>
+                    </button>
+                    <!-- <button class="trash-btn" title="View Deleted Task">
+                    <i class="fa-solid fa-dumpster"></i>
+                </button> -->
+                </div>
+            </section>
+        </main>
+        <!-- FOOTER  -->
+        <footer>
+            <p>&copy; 2024 MyTask App</p>
+        </footer>
+    </div>
+    <section class="section">
+        <div class="task-expand">
+            <form action="" id="taskEditForm">
+                <div class="expand-top mb-50">
+                    <div class="back-btn-wrap">
+                        <div class="back-btn" title="Go Back">
+                            <i class="fa-solid fa-circle-left"></i>
+                        </div>
+                    </div>
+                    <h2>Edit Existing Task</h2>
+                    <div class="button-box">
+                        <button type="submit">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="info-wrap">
+                    <div class="mb-50">
+                        <h2 id="task-name" class="mb-30">Task Name</h2>
+                        <h3 id="task-day" class="mb-30">Monday</h3>
+                        <h3 id="task-date">Task Date</h3>
+                    </div>
+                    <div>
+                        <textarea id="task-description" cols="30" rows="10"></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="form-popup">
+            <form id="taskForm">
+                <div class="add-top-action mb-50">
+                    <div class="back-btn-wrap">
+                        <div class="back-btn" type="button" title="Go Back">
+                            <i class="fa-solid fa-circle-left"></i>
+                        </div>
+                    </div>
+                    <h2>Add New Task</h2>
+                    <div class="button-box">
+                        <button type="submit" id="submit">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="input-box mb-30">
+                    <input type="text" id="taskName" placeholder="Task Name" required>
+                </div>
+                <div class="input-box mb-30">
+                    <input type="date" id="taskDate" placeholder="Task Date" required>
+                </div>
+                <div class="input-box mb-30">
+                    <input type="time" id="taskTime" placeholder="Task Time">
+                </div>
+                <div class="input-box mb-30">
+                    <textarea cols="30" rows="10" placeholder="Task Description" id="taskDescription"></textarea>
+                </div>
+            </form>
+            <div id="taskList">
             </div>
-        </section>
-    </main>
-    <!-- FOOTER  -->
-    <footer>
-        <p>&copy; 2023 MyTask App</p>
-    </footer>
+        </div>
+    </section>
     <div class="overlay">
+    </div>
+    <div class="menu-overlay">
     </div>
     <!-- <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> -->
     <script src="./js/data.js"></script>

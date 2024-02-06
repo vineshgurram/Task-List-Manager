@@ -275,3 +275,46 @@ buttons.forEach(function (button) {
         this.classList.add('active');
     });
 });
+
+
+
+
+// TASK BOX UI 
+/* <!-- <div class="task-box" data-id="${id}">
+                                <div class="flex">
+                                    <div class="action-box">
+                                        <input type="checkbox" class="checkbox" onclick="checkRemove(${id})"
+                                            data-id="${id}">
+                                    </div>
+                                    <div class="task-box-info">
+                                        <h3>${el.taskName}</h3>
+                                        <p>${el.taskDate.fullDate}</p>
+                                    <p class="task-status ${(el.taskStatus == " Completed") ? 'completed' : 'pending'
+                                        }">${(el.taskStatus == "Completed") ? "Done" : "Pending"}</p>
+                                    </div>
+                                    <div class="action-box-end">
+                                        <div class="mb-50">
+                                            <button class="task-completed-btn">
+                                                <i class="fa-solid fa-check"></i>
+                                            </button>
+                                            <button class="task-delete-btn" onclick="removeTask(id)">
+                                                <i class="fa-solid fa-trash-can"></i>
+                                            </button>
+                                        </div>
+                                        <button class="get-details" onclick="fetchDetails(${el.id})">
+                                            <i class="fa-solid fa-pencil"></i><span class="txt">Edit</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <!-- <div class="task-box">
+                                <div class="flex">
+                                    <div class="task-box-info">
+                                        <h3>Task Name</h3>
+                                        <p>Tuesday 20th December 2023</p>
+                                    </div>
+                                    <button>
+                                        <img src="img/right-up.png" alt="">
+                                    </button>
+                                </div>
+                            </div> -->*/
