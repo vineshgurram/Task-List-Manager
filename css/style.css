@@ -684,16 +684,16 @@ footer {
     grid-column: 1/5;
 }
 
-.task-grid .h2 .fa-face-meh{
+.task-grid .h2 .fa-face-meh {
     font-size: 100px;
     margin-bottom: 30px;
     color: red;
 }
 
-.task-grid .h2 h2{
+.task-grid .h2 h2 {
     font-size: 30px;
     font-weight: 700;
-} 
+}
 
 .all-btns .btn.active {
     background-color: #f0f424;
@@ -771,7 +771,7 @@ button {
     /* display: none; */
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     transition: 500ms ease all;
-    
+
 }
 
 .task-completed-box.active {
@@ -946,11 +946,11 @@ button {
     }
 }
 
-.task-delete-btn.active{
+.task-delete-btn.active {
     display: none;
 }
 
-.all-btns .title{
+.all-btns .title {
     background-color: #7D7C7C;
     padding: 10px !important;
 }
@@ -1302,11 +1302,19 @@ button {
 }
 
 @media screen and (max-width:767px) {
-    footer{
+    footer {
         padding: 16px;
+        height: 9.1vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
-    .task-completed-box.active{
+    .task-completed-box {
+        transform: translateY(-300%);
+    }
+
+    .task-completed-box.active {
         /* transform: translate(-50%,-50%);
         left: 50%;
         top: 10%;
@@ -1314,10 +1322,10 @@ button {
         text-align: center;
     }
 
-    .task-completed-box{
+    .task-completed-box {
         z-index: 10;
     }
-    
+
     .menu+.close-menu {
         font-size: 18px;
         color: #fff;
@@ -1327,7 +1335,7 @@ button {
         padding: 15px 0;
     }
 
-    .sidebar.active .menu + .close-menu {
+    .sidebar.active .menu+.close-menu {
         display: inline-block;
     }
 
@@ -1387,7 +1395,7 @@ button {
         display: block;
     }
 
-    .sidebar.active .btn-1{
+    .sidebar.active .btn-1 {
         transform: translate(10px, 10px);
     }
 
@@ -1398,7 +1406,7 @@ button {
         font-size: 27px;
     }
 
-    .mainbar a{
+    .mainbar a {
         font-size: inherit;
         font-weight: inherit;
         color: inherit;
