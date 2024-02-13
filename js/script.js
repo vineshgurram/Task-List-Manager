@@ -95,27 +95,29 @@ function showTask(array) {
             <div class="action-box-end">
                 <div class="complete-delete">
                     <button class="task-completed-btn ${(el.taskStatus == "Completed") ? 'd-none' : ''
-            }" onclick="completedTask(${el.id})">
+            }" onclick="completedTask(${el.id})" title="Complete">
                         <i class="fa-solid fa-check"></i>
                     </button>
-                    <button class="task-delete-btn" onclick="removeTask(id)">
+                    <button class="task-delete-btn" title="Delete" onclick="removeTask(id)">
                         <i class="fa-solid fa-trash-can"></i>
                     </button>
                 </div>
-                <button class="get-details" onclick="fetchDetails(${el.id})">
-                    <i class="fa-solid fa-pencil"></i><span class="txt">Edit</span>
+                <button class="get-details" onclick="fetchDetails(${id})">
+                    <i class="fa-solid ${(el.taskStatus == "Completed") ? 'fa-note-sticky' : 'fa-pencil'}""></i><span class="txt">${(el.taskStatus == "Completed") ? 'View' : 'Edit'}</span>
                 </button>
             </div>
         </div>
     </div>`;
     });
     displayLoader();
+    document.querySelector(".task-grid").classList.remove("active");
     document.querySelector(".task-grid").innerHTML = display;
 
     if (array.length == 0) {
         document.querySelector(".task-grid").innerHTML = `<div class="h2"><i class="fa-solid fa-face-meh"></i><div><h2>No tasks have been added yet</h2>`;
-    }
+        document.querySelector(".task-grid").classList.add("active");
 
+    }
     // let taskStatusElement = document.querySelector(".task-status");
     // if (taskStatusElement.innerText == "Done") {
     //     taskStatusElement.style.color = "#0174BE";
@@ -166,7 +168,7 @@ function completedTask(id) {
     saveTasksToLocalStorage();
     showTask(allTask);
     completeBox = document.querySelector(".task-completed-box");
-    notificationText.innerText = "Congratulations, you have successfully completed your task.";
+    notificationText.innerText = "Nailed it! That task is done!👏";
     completeBox.classList.add('active');
     completeBox.classList.add('alert');
     setTimeout(function () {
@@ -259,6 +261,12 @@ function fetchDetails(id) {
     document.querySelector('#task-date').innerText = `${(allTask[id].taskDate.month).slice(0, 3)} ${allTask[id].taskDate.date}, ${allTask[id].taskDate.year}`;
     document.querySelector('.task-expand').classList.add("active");
     document.querySelector('.overlay').classList.add("active");
+    document.querySelector('#task-description').removeAttribute("disabled");
+    document.querySelector("#taskEditForm .button-box button").classList.remove("d-none");
+    if (allTask[id].taskStatus === "Completed") {
+        document.querySelector('#task-description').setAttribute("disabled", "true");
+        document.querySelector("#taskEditForm .button-box button").classList.add("d-none");
+    }
     taskEditForm.addEventListener("submit", function (e) {
         e.preventDefault();
         allTask[id].taskDescription = document.querySelector('#task-description').value;
@@ -308,7 +316,7 @@ document.querySelector("#allTaskButton").addEventListener("click", () => {
 
 document.querySelector("#deletedTaskButton").addEventListener("click", () => {
     // alert("Currently this feature is on Development stage.")
-    filterDeleted();
+    filterDeleted("incomplete");
 });
 
 
@@ -372,20 +380,7 @@ function deleteButton() {
     document.querySelector('.operation-box').classList.remove("active");
 }
 
-// flatpickr("#taskDate", {
-//     minDate: "today",
-//     dateFormat: "d.m.Y",
-//     maxDate: "15.12.2024"
-// });
 
-// flatpickr("#taskTime", {
-//     enableTime: true,
-//     noCalendar: true,
-//     dateFormat: "H:i",
-//     time_24hr: false
-// });
-
-// showTask(allTask);
 getTasksFromLocalStorage();
 
 let taskBoxes = document.querySelectorAll(".task-box");
@@ -407,19 +402,28 @@ hamburgerMenu.addEventListener("click", function (event) {
 });
 
 
-// function filterDeleted() {
-//     let deletedTask = trashItems.map(function (el) {
-//         return el
-//     });
-//     console.log(deletedTask);
-//     displayLoader();
-//     showTask(completed);
-// }
+function filterDeleted() {
+    let deletedTask = trashItems.filter(function (el) {
+        el.taskStatus == 'deleted';
+    });
+    displayLoader();
+    showTask(deletedTask);
+    alert("Currently this feature is on development stage.")
+}
 
-let deleteTask = trashItems.map(function(el){
-    return el.id
-})
+// let deleteTask = trashItems.map(function (el) {
+//     return el.id
+// })
 
-console.log(deleteTask)
+// console.log(deleteTask)
 
 
+document.addEventListener("DOMContentLoaded", function () {
+    // Check if there are no tasks in local storage
+    if (localStorage.getItem("tasks") === null || JSON.parse(localStorage.getItem("tasks")).length === 0) {
+        const tg = new tourguide.TourGuideClient({
+            exitOnClickOutside: false
+        })
+        tg.start()
+    }
+});
