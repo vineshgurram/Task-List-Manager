@@ -56,17 +56,4 @@ let allTasks = [
 let allTask =[];
 
 let trashItems = [
-    {
-        id: 3,
-        taskName: "Read Book",
-        taskStatus: "Incompleted",
-        taskDescription:"Read Book description",
-        taskDate: {
-            fullDate: "Full date",
-            day: "Day",
-            date: "Date",
-            month: "Month",
-            year : "year"
-        }
-    }
 ];

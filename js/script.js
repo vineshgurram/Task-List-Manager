@@ -416,14 +416,3 @@ function filterDeleted() {
 // })
 
 // console.log(deleteTask)
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    // Check if there are no tasks in local storage
-    if (localStorage.getItem("tasks") === null || JSON.parse(localStorage.getItem("tasks")).length === 0) {
-        const tg = new tourguide.TourGuideClient({
-            exitOnClickOutside: false
-        })
-        tg.start()
-    }
-});
