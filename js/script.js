@@ -26,6 +26,10 @@ function saveTasksToLocalStorage() {
     localStorage.setItem('tasks', JSON.stringify(allTask));
 }
 
+// function generateUniqueId() {
+//    return Math.floor(Math.random()*100)
+// }
+
 function addTask() {
     let taskInputValue = taskInput.value;
     let taskDateObj = new Date(taskDate.value)
@@ -102,7 +106,7 @@ function showTask(array) {
                         <i class="fa-solid fa-trash-can"></i>
                     </button>
                 </div>
-                <button class="get-details" onclick="fetchDetails(${id})">
+                <button class="get-details" onclick="fetchDetails(${el.id})">
                     <i class="fa-solid ${(el.taskStatus == "Completed") ? 'fa-note-sticky' : 'fa-pencil'}""></i><span class="txt">${(el.taskStatus == "Completed") ? 'View' : 'Edit'}</span>
                 </button>
             </div>
@@ -148,6 +152,7 @@ function filterCompleted() {
         return el.taskStatus == "Completed";
     });
     displayLoader();
+    console.log(completed)
     showTask(completed);
 }
 
@@ -383,13 +388,13 @@ function deleteButton() {
 
 getTasksFromLocalStorage();
 
-let taskBoxes = document.querySelectorAll(".task-box");
-taskBoxes.forEach((box) => {
-    box.addEventListener("dblclick", function () {
-        id = box.getAttribute("data-id");
-        fetchDetails(id);
-    })
-})
+// let taskBoxes = document.querySelectorAll(".task-box");
+// taskBoxes.forEach((box) => {
+//     box.addEventListener("dblclick", function () {
+//         id = box.getAttribute("data-id");
+//         fetchDetails(id);
+//     })
+// })
 
 
 const hamburgerMenu = document.querySelector(".menu");
@@ -421,9 +426,11 @@ function filterDeleted() {
 document.addEventListener("DOMContentLoaded", function () {
     // Check if there are no tasks in local storage
     if (localStorage.getItem("tasks") === null || JSON.parse(localStorage.getItem("tasks")).length === 0) {
+        // document.querySelector(".task-grid").innerHTML = `<div class="h2"><i class="fa-solid fa-face-meh"></i><div><h2>No tasks have been added yet</h2>`;
+        // document.querySelector(".task-grid").classList.add("active");
         const tg = new tourguide.TourGuideClient({
             exitOnClickOutside: false
         })
-        tg.start()
+        tg.start()  
     }
 });

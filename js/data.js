@@ -54,6 +54,7 @@ let allTasks = [
 ];
 
 let allTask =[];
+let uniqueId = 0;
 
 let trashItems = [
     {
