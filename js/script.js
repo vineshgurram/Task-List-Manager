@@ -421,16 +421,3 @@ function filterDeleted() {
 // })
 
 // console.log(deleteTask)
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    // Check if there are no tasks in local storage
-    if (localStorage.getItem("tasks") === null || JSON.parse(localStorage.getItem("tasks")).length === 0) {
-        // document.querySelector(".task-grid").innerHTML = `<div class="h2"><i class="fa-solid fa-face-meh"></i><div><h2>No tasks have been added yet</h2>`;
-        // document.querySelector(".task-grid").classList.add("active");
-        const tg = new tourguide.TourGuideClient({
-            exitOnClickOutside: false
-        })
-        tg.start()  
-    }
-});

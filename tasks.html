@@ -91,12 +91,11 @@
                     </a>
                 </h1>
             </header>
-            <section class="section section-display h-100"
-                data-tg-tour="In these section, you'll see a list displaying all your tasks." data-tg-order="1">
+            <section class="section section-display h-100">
                 <div class="h-100">
                     <!-- ALL TASKS -->
                     <div style="position: relative;height: 100%;" class="show-alert">
-                        <div class="task-grid">
+                        <div class="task-grid" data-tg-tour="In these section, you'll see a list displaying all your tasks." data-tg-order="1">
                         </div>
                         <!-- LOADER -->
                         <div class="loader-wrap">
@@ -213,8 +212,19 @@
     <div class="menu-overlay">
     </div>
     <script src="./js/data.js"></script>
-    <script src="./js/script.js"></script>
     <script src="./js/tour.js"></script>
+    <script src="./js/script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Check if there are no tasks in local storage
+            if (localStorage.getItem("tasks") === null || JSON.parse(localStorage.getItem("tasks")).length === 0) {
+                const tg = new tourguide.TourGuideClient({
+                    exitOnClickOutside: false
+                })
+                tg.start()
+            }
+        });
+    </script>
 </body>
 
 </html>

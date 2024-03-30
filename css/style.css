@@ -136,6 +136,7 @@ h1 span {
     border-radius: 10px;
     font-size: 18px;
     line-height: 1.5;
+    outline: none;
 }
 
 input:focus ,textarea:focus {
@@ -1602,7 +1603,7 @@ button {
     }
 
     .task-box {
-        padding: 15px;
+        padding: 20px;
     }
 
     .task-expand button img,
